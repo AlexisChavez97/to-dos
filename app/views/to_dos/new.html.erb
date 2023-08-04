@@ -1,0 +1,5 @@
+<%= turbo_frame_tag "new-to-do" do %>
+  <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">New to-do</h1>
+
+  <%= render "to_dos/form", to_do: @to_do %>
+<% end %>
