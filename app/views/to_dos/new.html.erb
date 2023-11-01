@@ -1,5 +1,24 @@
-<%= turbo_frame_tag "new-to-do" do %>
-  <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl">New to-do</h1>
-
-  <%= render "to_dos/form", to_do: @to_do %>
+<%= turbo_frame_tag "modal" do %>
+  <div class="modal" data-controller="modal" data-modal-target="modal" data-action="turbo:submit-end->modal#submitEnd">
+    <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+  
+      <div class="fixed inset-0 z-10 overflow-y-auto">
+        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+          <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6 animate-fade-in-up">
+          <%= turbo_frame_tag "errors" %>
+            <div class="mt-3 text-center sm:mt-5">
+              <div class="mt-2">
+                <h1 class="mb-4 mt-8 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-3xl">New to-do</h1>
+                <%= render "to_dos/form", to_do: @to_do %>
+              </div>
+            </div>
+            <div class="mt-5 sm:mt-6">
+              <%= button_to "Go back", "#", class: "inline-flex w-full justify-center rounded-md bg-gray-400 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", data: { action: "modal#hideModal" } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 <% end %>
