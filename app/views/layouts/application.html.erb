@@ -14,6 +14,7 @@
   <body>
     <main class="mt-40 mx-auto max-w-7xl sm:px-6 lg:px-8">
       <%= yield %>
+      <%= turbo_frame_tag "modal" %>
     </main>
   </body>
 </html>

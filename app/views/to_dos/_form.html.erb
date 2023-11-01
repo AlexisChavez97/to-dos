@@ -1,27 +1,30 @@
-<%= form_with(model: to_do, url: to_dos_path, method: :post, class: "mt-20") do |form| %>
-  <% if form.object.errors.any? %>
-    <div id="error_explanation">
-      <div class="rounded-md bg-red-50 p-4 mb-8 max-w-lg">
-        <div class="flex">
-          <div class="flex-shrink-0">
-            <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
-            </svg>
-          </div>
-          <div class="ml-3">
-            <h3 class="text-sm font-medium text-red-800"><%= pluralize(form.object.errors.count, "error") %> prohibited this item from being saved:</h3>
-            <div class="mt-2 text-sm text-red-700">
-              <% form.object.errors.full_messages.each do |message| %>
-                <p><%= message %></p>
-              <% end %>
+<%= turbo_frame_tag "errors" do %>
+  <%= form_with(model: to_do, url: to_do.persisted? ? to_do_path(to_do) : to_dos_path, method: to_do.persisted? ? :patch : :post, class: "mt-20") do |form| %>
+    <% if form.object.errors.any? %>
+      <div id="error_explanation">
+        <div class="rounded-md bg-red-50 p-4 mb-8 max-w-lg">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div class="ml-3">
+              <h3 class="text-sm font-medium text-red-800"><%= pluralize(form.object.errors.count, "error") %> prohibited this item from being saved:</h3>
+              <div class="mt-2 text-sm text-red-700">
+                <% form.object.errors.full_messages.each do |message| %>
+                  <p><%= message %></p>
+                <% end %>
+              </div>
             </div>
           </div>
         </div>
       </div>
+    <% end %>
+    <div class="field max-w-sm flex">
+      <%= form.text_field :title, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mr-2", placeholder:" Your to-do title" %>
+      <%= link_to "Cancel", to_dos_path, class: "mr-1 text-white right-2.5 bottom-2.5 bg-gray-400 hover:bg-gray-500 focus:ring-4 font-medium rounded-lg text-sm px-4 py-2" if to_do.persisted? %>
+      <%= form.submit to_do.persisted? ? "Edit" : "Create", class: "text-white right-2.5 bottom-2.5 bg-indigo-500 hover:bg-indigo-600 focus:ring-4 font-medium rounded-lg text-sm px-4 py-2" %>
     </div>
   <% end %>
-  <div class="field max-w-sm flex">
-    <%= form.text_field :title, class: "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 mr-2", placeholder:" Your to-do title" %>
-    <%= form.submit "Create", class: "text-white right-2.5 bottom-2.5 bg-indigo-500 hover:bg-indigo-600 focus:ring-4 font-medium rounded-lg text-sm px-4 py-2" %>
-  </div>
 <% end %>

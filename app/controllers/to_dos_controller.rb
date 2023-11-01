@@ -12,10 +12,12 @@ class ToDosController < ApplicationController
   def create
     @to_do = ToDo.new(to_do_params)
     if @to_do.save
-      format.html { redirect_to to_dos_path }
-      format.turbo_stream
+      respond_to do |format|
+        format.html { redirect_to to_dos_path }
+        format.turbo_stream
+      end
     else
-      render :new, status: 422
+      render turbo_stream: turbo_stream.update("errors", partial: "shared/error_messages", locals: { errors: @to_do.errors.full_messages }), status: :unprocessable_entity
     end
   end
 
@@ -35,7 +37,11 @@ class ToDosController < ApplicationController
   def destroy
     @to_do = ToDo.find(params[:id])
     @to_do.destroy
-    redirect_to to_dos_path
+
+    respond_to do |format|
+      format.html { redirect_to to_dos_path }
+      format.turbo_stream
+    end
   end
 
   private

@@ -1,1 +1,2 @@
-<%= turbo_stream.prepend "to_dos", @to_do %>
+<%= turbo_stream.prepend "to_dos", partial: "to_dos/to_do", locals: { to_do: @to_do } %>
+<%= turbo_stream.update ToDo.new, "" %>
